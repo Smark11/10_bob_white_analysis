@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add On or Move? — A Decision Report for 10 Bob White Way</title>
+<meta name="description" content="A data-driven analysis of whether a family of four should add on to their raised ranch at 10 Bob White Way, Weatogue (Simsbury) CT, or move to a larger home. Researched July 2026; stress-tested by an adversarial expert panel.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..650;1,9..144,400..560&family=Hanken+Grotesk:wght@300..700&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<!-- ============ NAV ============ -->
+<nav class="nav" id="nav">
+  <a href="#top" class="nav__brand"><span class="dot"></span> 10 Bob White Way<span class="nav__suffix"> · Decision Report</span></a>
+  <div class="nav__links">
+    <a href="#reframe">Reframe</a>
+    <a href="#money">Money</a>
+    <a href="#paths">Paths</a>
+    <a href="#addition">Improve</a>
+    <a href="#plans">Plans</a>
+    <a href="#calculator">Calc</a>
+    <a href="#models">Lenses</a>
+    <a href="#map-section">Listings</a>
+    <a href="#life">Life</a>
+    <a href="#experts">Experts</a>
+    <a href="#stress">Stress</a>
+    <a href="#verdict">Verdict</a>
+  </div>
+  <a href="#verdict" class="nav__cta">The Recommendation</a>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="hero__bg"><img src="images/hero-autumn-street.jpg" alt="An autumn street of New England homes in Simsbury, Connecticut"></div>
+  <div class="hero__inner">
+    <div class="wrap">
+      <span class="eyebrow">A data-driven housing decision · Weatogue, Simsbury CT · July 2026</span>
+      <h1 class="display hero__q">Add on,<br>or <span class="ink-em">move?</span></h1>
+      <p class="hero__sub">A family of four — two boys and a dog — lives in a 1965 raised ranch at <strong>10 Bob White Way</strong>, a 0.3-mile walk from the best-testing elementary school in Simsbury. The house is comfortable but compact. We pulled the assessor's building sketch, the zoning regs, the parcel geometry, the market, and the mortgage math — then had an adversarial expert panel attack the answer.</p>
+      <div class="verdict-chip">
+        <span class="lbl">The answer</span>
+        <span class="val">Stay &amp; improve — verify the mortgage first</span>
+      </div>
+      <div class="hero__meta">
+        <span>Family of 4 · two boys · one dog</span>
+        <span>4 bd / 3 full baths / 1,505 sq ft up</span>
+        <span>8 research agents · adversarial review</span>
+      </div>
+    </div>
+  </div>
+  <div class="scrollcue"><span>Scroll</span><span class="line"></span></div>
+</header>
+
+<!-- ============ STAT STRIP ============ -->
+<section class="section section--tight band-2">
+  <div class="wrap">
+    <div class="statline r">
+      <div class="stat stat--pine">
+        <div class="stat__n">#36<span class="u">of 939</span></div>
+        <div class="stat__l">Latimer Lane's rank among all CT elementary schools — and Bob White Way is <em>already</em> zoned for it, a footpath away</div>
+        <div class="stat__src">Public School Review · district street list<sup class="cite" data-cite="psrlatimer,streetpdf"></sup></div>
+      </div>
+      <div class="stat stat--rust">
+        <div class="stat__n">2.88%</div>
+        <div class="stat__l">Where the 30-year rate stood the week this family closed (Aug 2020) — vs 6.58% today. Moving surrenders that gap on every dollar</div>
+        <div class="stat__src">Freddie Mac PMMS history<sup class="cite" data-cite="pmmshist,pmms"></sup></div>
+      </div>
+      <div class="stat stat--amber">
+        <div class="stat__n">10<span class="u">days</span></div>
+        <div class="stat__l">Median time a Simsbury listing survives, in Zillow's #1 hottest U.S. market — with ~1.4 months of supply</div>
+        <div class="stat__src">Movoto June '26 · Zillow<sup class="cite" data-cite="movototrends,hartford"></sup></div>
+      </div>
+      <div class="stat stat--pine">
+        <div class="stat__n">~$130K</div>
+        <div class="stat__l">The hurdle a move must clear — transaction friction + the forfeited cheap mortgage + the property-tax reset</div>
+        <div class="stat__src">IRR / breakeven lens, below<sup class="cite" data-cite="conveyance,clever"></sup></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE REFRAME ============ -->
+<section class="section" id="reframe">
+  <div class="wrap">
+    <div class="section-head r">
+      <span class="eyebrow">The facts that change the question</span>
+      <h2 class="h2">They already own the two things a move is supposed to buy.</h2>
+    </div>
+    <div class="reveal-card r d1">
+      <span class="eyebrow">Verified against the district's own street list &amp; the assessor record</span>
+      <p class="big">The school is <em>already theirs</em> — and so is a mortgage nobody can buy anymore.<sup class="cite" data-cite="streetpdf,pmmshist"></sup></p>
+      <p>The Simsbury Public Schools street listing maps <span class="mono">"Bob White Way → Latimer"</span> — the top-scoring elementary in town, fresh off a $39M renovation, reachable by a mapped neighborhood footpath. Moving anywhere in Simsbury buys <strong>zero school upgrade</strong>; middle and high school are town-wide. And the family closed in August 2020, the very week the 30-year rate printed its then-all-time low of 2.88%. That collapses the whole decision into one question: <strong>is the problem this house's comfort — or its size?</strong></p>
+      <span class="pill-verified">Street list, assessor card, parcel polygon &amp; sale deed all independently verified</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROPERTY DOSSIER ============ -->
+<section class="section band-2" id="home">
+  <div class="wrap">
+    <div class="dossier">
+      <div class="dossier__img r">
+        <img src="images/neighborhood-aerial.jpg" alt="Aerial view of a leafy Connecticut neighborhood of mid-century homes">
+        <div class="dossier__tag">Illustrative imagery · 1965 raised-ranch neighborhood</div>
+      </div>
+      <div class="r d1">
+        <span class="eyebrow">The current home</span>
+        <h2 class="h3" style="margin-top:14px">A 54×26 raised ranch: rich in bedrooms and baths, short on living space — and it has no air conditioning.</h2>
+        <p class="lead" style="font-size:1.05rem;margin-top:14px">Bought August 2020 for $310K after 4 days on market; worth roughly <strong>$453–553K</strong> today. Four bedrooms and three <em>full</em> baths — rare at this size — but only 1,505 sq ft above grade, and the assessor records <strong>0% cooling</strong>. The 0.92-acre lot is the hidden asset: fully conforming, public sewer, and ~53 ft of by-right room to build behind the house.<sup class="cite" data-cite="assessor,mls2020,redfinavm"></sup></p>
+        <div class="specs" id="specs"></div>
+        <p class="disclaim" style="margin-top:20px">Assessed <strong>$233,030</strong> (2022 reval) · tax <strong>$7,960/yr</strong> at 34.16 mills, ≈$8,113 at the new FY27 rate. Value estimate spans Redfin's $552.8K AVM and the street's last actual sale at $452.5K — treat the midpoint as a working number, not an appraisal.<sup class="cite" data-cite="assessor,redfinavm,cbh25,millrate"></sup></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SCHOOLS ============ -->
+<section class="section" id="schools">
+  <div class="wrap">
+    <div class="section-head r">
+      <span class="eyebrow">Schools — the argument that isn't one</span>
+      <h2 class="h2">Every Simsbury elementary is strong. Theirs tests best — and just got rebuilt.</h2>
+      <p class="lead">All five elementaries feed the same single middle school and the same high school, so a move within town changes K-6 only. Bob White Way's school ranks in the state's top 5% and reopened from a $39M renovation as the district's newest building.<sup class="cite" data-cite="psrlatimer,latreno"></sup></p>
+    </div>
+    <div class="imgband r" style="margin-bottom:36px">
+      <img src="images/school.jpg" alt="A New England public elementary school" onerror="this.closest('.imgband').style.display='none'">
+      <div class="imgband__cap"><div class="k">Latimer Lane Elementary · Weatogue</div><div class="t">Top-scoring in Simsbury, $39M renovation — and a 0.3-mile walk from the family's front door.</div></div>
+    </div>
+    <div class="grid cols-2" style="align-items:start">
+      <div class="r">
+        <div class="school-bars" id="schoolBars"></div>
+        <p class="disclaim" style="margin-top:22px">GreatSchools 0–10 on the bars; Public School Review CT rank and proficiency in the labels. Latimer Lane: 78% math / 82% reading vs CT averages of ~41% / ~50%.<sup class="cite" data-cite="gslatimer,psrlatimer,psrtootin,psrcentral,psrsquadron,psrtariff"></sup></p>
+      </div>
+      <div class="r d2">
+        <h3 class="h3" style="margin-bottom:18px">The K–12 pipeline is identical town-wide</h3>
+        <div class="pipeline" id="pipeline"></div>
+        <div class="pullquote" style="margin-top:34px">"Moving within Simsbury can only match or downgrade the boys' elementary school. It cannot improve it."
+          <span class="by">— Schools research synthesis<sup class="cite" data-cite="streetpdf,shsniche"></sup></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MONEY ENGINE — LOCK-IN ============ -->
+<section class="section band-ink" id="money">
+  <div class="wrap">
+    <div class="section-head r" style="--muted:#9a978a">
+      <span class="eyebrow" style="color:#9a978a">The financial crux</span>
+      <h2 class="h2" style="color:var(--paper)">The golden handcuffs are even tighter here: a probable sub-3% loan.</h2>
+      <p class="lead" style="color:#cfc9ba">The family closed on August 7, 2020 — PMMS printed 2.88% that week, its all-time low at the time. If they financed at purchase and never refinanced, they hold a ~2.9–3.0% mortgage. Moving re-prices <em>everything</em> at today's 6.58%; improving borrows only the project at ~7.75% while the cheap first mortgage survives untouched.<sup class="cite" data-cite="pmmshist,pmms,helrate"></sup></p>
+    </div>
+    <div class="engine">
+      <div class="rate-compare r">
+        <div class="rate-row lock">
+          <div><div class="lab">Likely locked-in rate</div><div class="big">2.95%</div></div>
+          <div style="flex:1"><div class="rate-track"><i style="width:42%;background:var(--pine-2)"></i></div></div>
+        </div>
+        <div class="rate-row today">
+          <div><div class="lab">Today's 30-yr rate</div><div class="big">6.58%</div></div>
+          <div style="flex:1"><div class="rate-track"><i style="width:94%;background:var(--rust)"></i></div></div>
+        </div>
+        <div class="penalty">
+          <div class="n">+$216<span style="font-size:.4em;color:var(--muted)">/mo per $100K</span></div>
+          <div class="l">The rate penalty of giving up the low rate — roughly <strong>$3,600/yr for every $100,000</strong> re-borrowed, before any price step-up. On the ~$456K loan a $700K purchase implies, that's ~$1,000/month of pure penalty.</div>
+        </div>
+      </div>
+      <div class="r d2" style="color:#cfc9ba">
+        <h3 class="h3" style="color:var(--paper);margin-bottom:16px">An improvement keeps the cheap mortgage intact</h3>
+        <p>A project funded by a <strong style="color:#fff">fixed second lien</strong> (home-equity loan, ~7.36–8.08% in late July 2026) leaves the first mortgage untouched. And unlike the typical lock-in story, the numbers here are unusually clean: with ~$285K of equity on a ~$215K balance, even the full improvement menu fits under an 80% combined loan-to-value with room to spare — no exotic financing needed.<sup class="cite" data-cite="helrate,heloc"></sup></p>
+        <div class="grid cols-2" style="gap:14px;margin-top:24px">
+          <div class="stat" style="background:rgba(255,255,255,.06);border-radius:12px;border:1px solid rgba(255,255,255,.12)">
+            <div class="stat__n" style="color:#fff;font-size:2rem">~$60K</div>
+            <div class="stat__l" style="color:#cfc9ba">approximate present value of keeping a 2.95% loan instead of re-borrowing at 6.58%</div>
+          </div>
+          <div class="stat" style="background:rgba(255,255,255,.06);border-radius:12px;border:1px solid rgba(255,255,255,.12)">
+            <div class="stat__n" style="color:#fff;font-size:2rem">~$185K</div>
+            <div class="stat__l" style="color:#cfc9ba">second-lien headroom at 80% CLTV — every sensible project on the menu fits</div>
+          </div>
+        </div>
+        <p class="disclaim" style="margin-top:22px;background:rgba(192,132,43,.12);border-color:rgba(192,132,43,.4);color:#e9d9b6">⚠ The 2.95% figure is inferred from the closing date — <strong>not confirmed</strong>. A refinance, cash-out, or ARM would change this entire section. Pulling the actual statement is step one of the checklist.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THREE PATHS ============ -->
+<section class="section" id="paths">
+  <div class="wrap">
+    <div class="section-head r">
+      <span class="eyebrow">The three paths, scored</span>
+      <h2 class="h2">Stay &amp; improve, move now, or wait.</h2>
+      <p class="lead">Scores are a qualitative synthesis across cost, fit, risk, and livability — pressure-tested by the expert panel below. B is a genuine contender with one real catch: in-zone inventory is about one good listing deep.</p>
+    </div>
+    <div class="pathshots r">
+      <div class="pathshot pathshot--a">
+        <img src="images/addition-construction.jpg" alt="A home addition under construction">
+        <div class="pathshot__lbl"><div class="k">Option A · Recommended</div><div class="t">Stay &amp; improve</div></div>
+      </div>
+      <div class="pathshot pathshot--b">
+        <img src="images/latimer-home.jpg" alt="A larger colonial home for sale">
+        <div class="pathshot__lbl"><div class="k">Option B · Contender</div><div class="t">Move up, in-zone</div></div>
+      </div>
+      <div class="pathshot pathshot--c">
+        <img src="images/crossroads.jpg" alt="A tree-lined autumn road">
+        <div class="pathshot__lbl"><div class="k">Option C · Not advised</div><div class="t">Wait 1–3 years</div></div>
+      </div>
+    </div>
+    <div class="opt-cards" id="optCards"></div>
+    <p class="disclaim" style="margin-top:24px">Scores are judgment, not output — the live calculator below lets you pressure-test the dollars yourself.</p>
+  </div>
+</section>
+
+<!-- ============ IMPROVEMENT MENU ============ -->
+<section class="section band-2" id="addition">
+  <div class="wrap">
+    <div class="section-head r">
+      <span class="eyebrow">The improvement menu, costed for a raised ranch</span>
+      <h2 class="h2">What this specific house can — and can't — become.</h2>
+      <p class="lead" id="additionIntro"></p>
+    </div>
+
+    <div class="rec-addition r" id="additionRec"></div>
+
+    <div class="chartcard r" style="margin-top:24px">
+      <h4>What each option costs — against the ~$150K defensible ceiling<sup class="cite" data-cite="casali,fhc,blockrr,cvv"></sup></h4>
+      <p class="cap" id="additionCeiling"></p>
+      <div class="chart-box tall"><canvas id="additionChart" role="img" aria-label="Floating bar chart of the cost range of each improvement option. The comfort package, screened porch, suite reshuffle and rear addition sit under the roughly $150,000 over-improvement ceiling; the combo straddles it; the garage conversion and second story run past it."></canvas></div>
+    </div>
+
+    <div class="add-cards r" id="additionScenarios" style="margin-top:24px"></div>
+
+    <div class="grid cols-2 r" style="margin-top:40px; align-items:start">
+      <div>
+        <div class="subhead-light" style="color:var(--muted)">Where Phase-2 money goes — a rear family-room addition</div>
+        <div class="lineitems" id="additionLineItems"></div>
+        <p class="disclaim" id="additionSoft" style="margin-top:18px"></p>
+      </div>
+      <div>
+        <div class="disclaim" id="additionSeptic" style="border-left-color:var(--pine); background:var(--pine-wash)"></div><sup class="cite" data-cite="mls2020,cbh25,aquarion,wpca"></sup>
+        <div class="disclaim" style="margin-top:18px"><b>The ANSI catch, in one line.</b> Since 2022, appraisers must exclude any partly-below-grade level from a home's headline square footage — so every dollar spent finishing this raised ranch's lower level lands on the appraisal's "basement" line at ~50–75% credit, and only the rear addition raises the 1,505 sq ft that listings lead with.<sup class="cite" data-cite="ansi,getloans,basementcredit"></sup></div>
+        <div class="pullquote" id="additionBottom" style="margin-top:26px; font-size:clamp(1.15rem,2.1vw,1.55rem)"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FLOOR PLANS ============ -->
+<section class="section" id="plans">
+  <div class="wrap">
+    <div class="section-head r">
+      <span class="eyebrow">From the assessor's sketch up</span>
+      <h2 class="h2">What the options actually look like.</h2>
+      <p class="lead">The home and each option drawn <strong>to scale on the exact assessor envelope</strong> — the 54×26 main block, the ~1-ft cantilevers that make up the recorded 1,505 sq ft, and the 322 sq ft clipped-corner deck. Each room is dimension-labeled; a 10-ft scale bar sits in every plan.<sup class="cite" data-cite="assessor,compass2020"></sup></p>
+    </div>
+    <p class="plan-consensus r" id="plansConsensus"></p>
+    <p class="disclaim r" id="plansDisclaim"></p>
+    <div class="fp-legend r"><span><i style="background:var(--paper-2)"></i> Existing</span><span><i style="background:var(--pine-wash);border-color:var(--pine)"></i> New / changed</span><span style="color:var(--muted)">To scale · dimension-labeled · 10-ft bar</span></div>
+    <h3 class="subhead-light r" style="color:var(--muted); margin:30px 0 14px">The home today</h3>
+    <div class="fp-grid r" id="plansExisting"></div>
+    <div id="plansOptions"></div>
+  </div>
+</section>
+
+<!-- ============ CALCULATOR ============ -->
+<section class="section band-3" id="calculator">
+  <div class="wrap">
+    <div class="section-head r">
+      <span class="eyebrow">Pressure-test it yourself</span>
+      <h2 class="h2">The 10-year decision calculator.</h2>
+      <p class="lead">Drag any assumption. The verdict recomputes live. The single most important input is the <strong>current mortgage rate</strong> — set it at 5% and watch the recommendation flip toward moving. Unlike most models, property tax on a purchase here uses Simsbury's <em>effective</em> rate (~1.6% of price on 2022-reval assessments), not the sticker mill rate.<sup class="cite" data-cite="cgs62a,millrate"></sup></p>
+    </div>
+    <div class="calc">
+      <div class="calc__panel r">
+        <div id="controls"></div>
+        <button class="calc__reset" id="resetBtn">↺ Reset to researched defaults</button>
+      </div>
+      <div class="calc__out r d1">
+        <div class="verdict-bar" id="verdictBar">
+          <div><div class="k">Recommendation</div><div class="v" id="verdictText">—</div></div>
+          <div class="note" id="verdictNote"></div>
+        </div>
+        <div class="calc-cards" id="calcCards"></div>
+        <div class="calc-chart-wrap">
+          <h4>Projected net worth at 10 years (home equity + invested cash-flow difference)</h4>
+          <div class="chart-box"><canvas id="netChart" role="img" aria-label="Stacked bar chart comparing projected 10-year net worth for the three options — home equity plus invested cash-flow difference for each of stay-and-improve, move now, and wait."></canvas></div>
+        </div>
+        <div class="assume-note" id="assumeNote"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SIX LENSES ============ -->
+<section class="section band-3" id="models">
+  <div class="wrap">
+    <div class="section-head r">
+      <span class="eyebrow">Buy vs. sell vs. stay — through six financial lenses</span>
+      <h2 class="h2">The same decision, six financial models.</h2>
+      <p class="lead" id="modelsIntro"></p>
+    </div>
+    <div class="model-cards r" id="modelCards"></div>
+    <div class="pullquote r" id="modelsBottom" style="margin-top:38px; max-width:62ch; font-size:clamp(1.1rem,2vw,1.5rem)"></div>
+  </div>
+</section>
+
+<!-- ============ MARKET & RATES ============ -->
+<section class="section" id="market">
+  <div class="wrap">
+    <div class="section-head r">
+      <span class="eyebrow">Market &amp; rate outlook</span>
+      <h2 class="h2">A scorching market — and no rate rescue in any forecast.</h2>
+    </div>
+    <div class="statline r" style="margin-bottom:36px">
+      <div class="stat"><div class="stat__n">$575K</div><div class="stat__l">Simsbury median sold price, June 2026 — 54 homes sold that month</div><div class="stat__src">Movoto market trends<sup class="cite" data-cite="movototrends"></sup></div></div>
+      <div class="stat"><div class="stat__n">~1.4<span class="u">mo</span></div><div class="stat__l">Months of supply — 75 actives against ~54 monthly sales</div><div class="stat__src">Computed from Movoto<sup class="cite" data-cite="movototrends"></sup></div></div>
+      <div class="stat"><div class="stat__n">+7.4%</div><div class="stat__l">Simsbury typical-home-value growth, year over year</div><div class="stat__src">Zillow home values<sup class="cite" data-cite="zhvi"></sup></div></div>
+      <div class="stat"><div class="stat__n">6%+</div><div class="stat__l">Where Fannie Mae AND the MBA keep 30-yr rates through 2027 — no forecaster projects relief below 6%</div><div class="stat__src">Fannie / MBA forecasts<sup class="cite" data-cite="fannie,mba,fastco"></sup></div></div>
+    </div>
+    <div class="grid cols-2" style="align-items:stretch">
+      <div class="chartcard r">
+        <h4>30-year mortgage rate — three scenarios</h4>
+        <p class="cap">Consensus (Fannie ~6.2–6.4%, MBA ~6.5%) keeps rates in the low-to-mid 6s through 2028. Meaningful relief needs inflation to break or a recession — the "wait" option is a bet on exactly that.<sup class="cite" data-cite="fannie,mba,pmms"></sup></p>
+        <div class="chart-box"><canvas id="rateChart" role="img" aria-label="Line chart of the 30-year mortgage rate under three scenarios from now through five years. The consensus base case drifts from 6.58 percent to about 6.1 percent; only the optimistic scenario reaches the low 5s."></canvas></div>
+      </div>
+      <div class="chartcard r d1">
+        <h4>What moving money buys, by school zone</h4>
+        <p class="cap">Live listings, July 2026. Nearly every big-square-footage option means leaving the Latimer zone; the one real in-zone size jump is 5 Lawton Dr at $649,900.<sup class="cite" data-cite="movoto,cbhsimsbury,streetpdf"></sup></p>
+        <div class="chart-box"><canvas id="scatterChart" role="img" aria-label="Scatter plot of current Simsbury listings by price versus square footage, colored by school zone. Most larger homes fall outside the Latimer Lane zone. The current home and its projected position after a roughly 120 thousand dollar improvement are marked with amber symbols."></canvas></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MAP + LISTINGS ============ -->
+<section class="section band-2" id="map-section">
+  <div class="wrap">
+    <div class="section-head r">
+      <span class="eyebrow">Actual homes on the market — zone-checked</span>
+      <h2 class="h2">If they did move, here's what's really available.</h2>
+      <p class="lead">Sixteen live listings captured July 26, 2026 — each one checked against the district's own street listing, because portals don't show school zones. Green pins stay in the Latimer zone; grey pins mean the boys change schools.<sup class="cite" data-cite="streetpdf,movoto,cbhsimsbury"></sup></p>
+    </div>
+    <div id="map" class="r"></div>
+    <div class="map-legend r">
+      <span><i style="background:#2E8B6A"></i> In Latimer Lane zone</span>
+      <span><i style="background:#5C6B71"></i> Other Simsbury zone</span>
+      <span><i style="background:#B98A2E"></i> 10 Bob White Way (current home)</span>
+      <span><i style="background:#3b3b34"></i> Latimer Lane School</span>
+      <span style="color:var(--muted)">Pin locations are approximate (street-level)</span>
+    </div>
+    <div class="listings" id="listings"></div>
+    <p class="disclaim" style="margin-top:22px">Listings captured 7/26/2026 in a ~10-day-turnover market — some will already be gone. Links open the source search page or listing; verify current status and price there. Several portals (Zillow, Redfin, Realtor.com) block automated access, so some figures are from the pages that could be retrieved. School-zone flags come from the district street listing (rev. 4/23/2025) — confirm with the district before any offer.</p>
+  </div>
+</section>
+
+<!-- ============ LIFE / FAMILY FIT ============ -->
+<section class="section" id="life">
+  <div class="wrap">
+    <div class="section-head r">
+      <span class="eyebrow">The part spreadsheets miss</span>
+      <h2 class="h2">Two boys, one dog, and a neighborhood built for both.</h2>
+      <p class="lead">Bob White Way is a low-traffic internal loop — it connects only to Red Stone Drive and Butternut Lane, so there's no through-traffic — with a mapped footpath to school and a rail-trail connector in the neighborhood.<sup class="cite" data-cite="strattonbrook,simsburyfarms,dogpark,fcht"></sup></p>
+    </div>
+    <div class="pipeline r" id="lifeGrid" style="flex-wrap:wrap"></div>
+    <div class="r" style="margin-top:48px">
+      <h3 class="h3">What the research says about moving with school-age kids</h3>
+      <p class="lead" id="psychIntro" style="margin-top:12px; max-width:760px"></p>
+      <div class="psy-grid" id="psychCards" style="margin-top:26px"></div>
+      <p class="disclaim" style="margin-top:22px">Peer-reviewed sources cited in the references: AACAP guidance, Oishi &amp; Schimmack (2010), the 2019 Frontiers cohort review, and Calhoun (2026) on school vs residential moves.<sup class="cite" data-cite="aacap,oishi,frontiers,calhoun,childmind"></sup></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FORECAST ============ -->
+<section class="section band-2" id="forecast">
+  <div class="wrap">
+    <div class="section-head r">
+      <span class="eyebrow">The 1–5 year forecast — why waiting is a trap</span>
+      <h2 class="h2">What's likely to come on the market, and when.</h2>
+      <p class="lead">Hartford-area inventory sits ~63% below pre-pandemic norms — the largest deficit among big metros — and Simsbury clears what little lists in about ten days. The pipeline's one big item (the contested ~689-unit Hartford-campus plan) is mostly apartments, not the 4-bed singles this family would want.<sup class="cite" data-cite="hartford,movototrends,hbj689"></sup></p>
+    </div>
+    <div class="timeline" id="timeline"></div>
+  </div>
+</section>
+
+<!-- ============ EXPERTS ============ -->
+<section class="section band-ink" id="experts">
+  <div class="wrap">
+    <div class="section-head r" style="--muted:#9a978a">
+      <span class="eyebrow" style="color:#9a978a">The honest part</span>
+      <h2 class="h2" style="color:var(--paper)">We had four experts attack our own analysis. Here's what they caught.</h2>
+      <p class="lead" style="color:#cfc9ba">A real-estate agent, a general contractor, a mortgage loan officer, and a fee-only CFP each pressure-tested the draft. What survived is on this page; what didn't is listed below.</p>
+    </div>
+    <div class="exp-cards r" id="expCards"></div>
+    <div style="margin-top:46px" class="r">
+      <h3 class="h3" style="color:var(--paper);margin-bottom:8px">Corrections we applied</h3>
+      <p style="color:#9a978a;font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px">What the panel changed before publication:</p>
+      <ul class="corrections" id="corrections" style="--line:rgba(255,255,255,.14)"></ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STRESS TEST ============ -->
+<section class="section" id="stress">
+  <div class="wrap">
+    <div class="section-head r">
+      <span class="eyebrow">Stress test — challenging our own call</span>
+      <h2 class="h2">Where this could be wrong.</h2>
+      <p class="lead" id="stressIntro"></p>
+    </div>
+    <div class="stress-verdict r" id="stressVerdict"></div>
+    <div class="stress-list r" id="stressList" style="margin-top:32px"></div>
+    <div class="r" style="margin-top:36px">
+      <div class="subhead-light" style="color:var(--muted)">The biggest vulnerabilities</div>
+      <ul class="vuln-list" id="stressVuln"></ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAMILY BAND ============ -->
+<div class="photoband">
+  <img src="images/family-home.jpg" alt="A young family playing in the front yard of their home at golden hour">
+  <div class="photoband__cap"><div class="wrap"><p class="pullquote pq">"Buy comfort before square footage — and never pay a toll for a school you already own."<span class="by">— The recommendation, in one line</span></p></div></div>
+</div>
+
+<!-- ============ VERDICT ============ -->
+<section class="section" id="verdict">
+  <div class="wrap">
+    <div class="rec r">
+      <span class="eyebrow">The recommendation</span>
+      <h2 class="rec__title">Stay — fix comfort first, add space <em>only</em> if the squeeze survives Phase 1.</h2>
+      <p class="rec__lead">Phase 1 (<strong>~$25–50K</strong>): central air on the existing ducts and the last unfinished corner of the lower level — the highest livability-per-dollar move this house allows. Phase 2 (<strong>~$75–160K</strong>, only if needed): a rear family-room addition on the verified ~53 ft of by-right rear yard — the one project that adds real above-grade square footage. Both financed by a second lien that never touches the probable 2.95% mortgage. Option B — buying a 5 Lawton-class in-zone home — is the right answer <em>if</em> the family's true need is 2,800+ sq ft or the mortgage turns out not to be cheap. Option C, waiting, is not recommended under any forecast on record.</p>
+      <div class="rec__grid">
+        <div>
+          <div class="subhead-light">Before spending a dollar — the checklist</div>
+          <ul class="checklist" id="checklist"></ul>
+        </div>
+        <div>
+          <div class="subhead-light">What would flip the answer to "move"</div>
+          <div class="flips" id="flips"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ METHODOLOGY ============ -->
+<section class="section band-2" id="methodology">
+  <div class="wrap">
+    <div class="section-head r">
+      <span class="eyebrow">Methodology, assumptions &amp; sources</span>
+      <h2 class="h2">How this was built — and where to check it.</h2>
+      <p class="lead">Researched July 26, 2026 by an eight-agent team across property records, market, construction, zoning/GIS, schools, and family research; modeled; then reviewed by a four-expert adversarial panel. These are well-researched estimates, not the family's confirmed figures.</p>
+    </div>
+    <div class="method">
+      <div class="r">
+        <div class="subhead-light" style="color:var(--muted)">Key modeling assumptions</div>
+        <ul class="assumptions" id="assumptions"></ul>
+        <p class="disclaim" style="margin-top:18px">* The modeled 2.95% / $215K first mortgage is inferred from the Aug 2020 purchase — <strong>not confirmed</strong>. It is the single most important number to verify, and the live calculator lets you replace it.</p>
+      </div>
+      <div class="r d1">
+        <div class="subhead-light" style="color:var(--muted)">How it was built</div>
+        <ul class="howbuilt">
+          <li>Five research→develop→analyze iterations: broad research → deep-dives (assessor sketch decode, parcel-polygon geometry, zone-checking every listing) → build → adversarial expert review → verification.</li>
+          <li>The assessor's building sketch was decoded to reconstruct the exact 54×26 envelope behind the floor plans.</li>
+          <li>Every active listing's school zone was checked against the district's own street listing — not portal guesses.</li>
+          <li>The financial engine fixes a real bug in its predecessor: purchases are taxed at Simsbury's effective rate on market value, not the sticker mill rate.</li>
+          <li>Chart palette validated for color-blind separation and contrast before publication.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="r" style="margin-top:48px">
+      <div class="subhead-light" style="color:var(--muted)">References — every source cited (<span id="refCount"></span>)</div>
+      <div class="references" id="references"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="wrap">
+    <span class="eyebrow">10 Bob White Way · Decision Report</span>
+    <p class="display" style="margin-top:16px;max-width:20ch">The goal isn't more house. It's a better decade in one.</p>
+    <div class="footer__cols">
+      <div>
+        <p style="color:#cfc9ba;max-width:46ch">Two boys, a dog, a walkable top-of-state school, and a mortgage from the cheapest week in history. Fix the comfort, keep the handcuffs, and verify the loan statement before anything else.</p>
+      </div>
+      <div>
+        <div class="subhead-light" style="color:#9a978a">The verdict</div>
+        <p style="color:#cfc;font-family:var(--serif);font-size:1.3rem">Stay &amp; improve<br><span style="font-size:.8rem;font-family:var(--mono);color:#9a978a">B if scale is the true need · C is out</span></p>
+      </div>
+      <div>
+        <div class="subhead-light" style="color:#9a978a">Confidence</div>
+        <p style="color:#cfc;font-family:var(--serif);font-size:1.3rem">Medium-high<br><span style="font-size:.8rem;font-family:var(--mono);color:#9a978a">High on facts · gated on the mortgage</span></p>
+      </div>
+    </div>
+    <p class="footer__note">
+      Prepared July 26, 2026. Independent research and general financial/market information — not personalized investment, mortgage, tax, or real-estate advice, and not affiliated with the property's owners. All figures are researched estimates triangulated from public sources and change daily in a ~10-day-turnover market. Map pins are approximate. Property, school-zone, tax, and zoning details must be verified with the Town of Simsbury, Simsbury Public Schools, and licensed professionals before any decision. Photography is illustrative, AI-generated imagery — it does not depict the actual home or street. Floor-plan interiors are professional estimates fitted to the exact assessor envelope. Sources linked above.
+    </p>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/model.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
