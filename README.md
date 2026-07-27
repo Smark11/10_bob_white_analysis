@@ -6,7 +6,7 @@ A self-contained static site answering one question for a family of four (two bo
 
 ## Recommendation
 
-**Stay & improve — verify the mortgage first.** Phase 1 (~$32–60K): whole-house cooling (gated on a duct inspection) + finish the last unfinished corner of the lower level. Phase 2 (~$110–185K all-in, only if the squeeze survives Phase 1): a rear family-room addition on the lot's ~53 ft of by-right rear depth. Moving is the right answer if the family honestly values the extra ~1,300 sq ft near $1,000/month or the mortgage turns out not to be cheap. Waiting is rejected.
+**Stay & improve — verify the mortgage first.** Phase 1 (~$20–40K): finish the last unfinished corner of the lower level (the house already has central air — owner-confirmed, added a few years ago; the assessor card is stale). Phase 2 (~$110–185K all-in, only if the squeeze survives Phase 1): a rear family-room addition on the lot's ~53 ft of by-right rear depth. Moving is the right answer if the family honestly values the extra ~1,300 sq ft near $1,000/month or the mortgage turns out not to be cheap. Waiting is rejected.
 
 The pivotal verified facts:
 - **Bob White Way → Latimer Lane** (top-scoring elementary in Simsbury, top 5% in CT, $39M renovation, 0.3-mi walk) — moving buys zero school upgrade; middle/high are town-wide.
