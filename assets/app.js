@@ -307,8 +307,8 @@
 
   function renderVerdictExtras() {
     const checklist = [
-      ["Pull the mortgage statement", "rate, balance, term — the entire ranking rests on the inferred ~2.9%. One phone call settles it"],
-      ["Name the real pain: comfort or scale?", "no AC and a dated corner → Phase 1 fixes it for ~$25–50K; wanting 2,800+ sq ft → that's a move, not a project"],
+      ["Pull the mortgage statement", "rate, balance, term — the entire ranking rests on the inferred ~3.1%. One phone call settles it"],
+      ["Name the real pain: comfort or scale?", "no AC and a dated corner → Phase 1 fixes it for ~$32–60K; wanting 2,800+ sq ft → that's a move, not a project"],
       ["Inspect the ducts before pricing the AC", "the 2020 MLS said baseboard heat; the 2026 assessor card says forced air — if AC-sized ducts exist, cooling is $6–15K; if not, $15–30K"],
       ["Get a real CMA, not an AVM", "the time-adjusted estimate is ~$525K, but it's an adjustment exercise — a local agent's comp run replaces it in an afternoon"],
       ["Confirm the sewer lateral & the right-of-way", "the street is sewered per two MLS records; call Simsbury WPCF (860-658-3258) and locate the deeded right-of-way on a survey before siting any addition"],

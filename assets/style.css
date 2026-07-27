@@ -263,7 +263,7 @@ h1, h2, h3, h4 { font-family: var(--serif); font-weight: 540; line-height: 1.04;
 .opt:hover{ transform: translateY(-4px); box-shadow: var(--shadow-md);}
 .opt--a{ --c: var(--opt-a);} .opt--b{ --c: var(--opt-b);} .opt--c{ --c: var(--opt-c);}
 .opt__rec{ position:absolute; top:18px; right:18px; font-family:var(--mono); font-size:.58rem; letter-spacing:.14em; text-transform:uppercase; background:var(--pine); color:#fff; padding:4px 10px; border-radius:999px;}
-.opt__k{ font-family:var(--mono); font-size:.66rem; letter-spacing:.14em; text-transform:uppercase; color:var(--c); font-weight:600;}
+.opt__k{ font-family:var(--mono); font-size:.66rem; letter-spacing:.14em; text-transform:uppercase; color:var(--c); font-weight:600; padding-right:96px;}
 .opt__title{ font-family:var(--serif); font-size:1.45rem; font-weight:560; margin-top:10px; line-height:1.08;}
 .opt__score{ display:flex; align-items:baseline; gap:8px; margin:18px 0; }
 .opt__score .num{ font-family:var(--serif); font-weight:600; font-size:2.8rem; line-height:1; color:var(--c); font-variant-numeric:tabular-nums;}
