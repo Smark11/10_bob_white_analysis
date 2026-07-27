@@ -308,11 +308,9 @@
   function renderVerdictExtras() {
     const checklist = [
       ["Pull the mortgage statement", "rate, balance, term — the entire ranking rests on the inferred ~3.1%. One phone call settles it"],
-      ["Name the real pain: comfort or scale?", "no AC and a dated corner → Phase 1 fixes it for ~$32–60K; wanting 2,800+ sq ft → that's a move, not a project"],
-      ["Inspect the ducts before pricing the AC", "the 2020 MLS said baseboard heat; the 2026 assessor card says forced air — if AC-sized ducts exist, cooling is $6–15K; if not, $15–30K"],
+      ["Name the real pain: comfort or scale?", "a dated, unfinished corner → Phase 1 completes the lower level for ~$20–40K; wanting 2,800+ sq ft → that's a move, not a project"],
       ["Get a real CMA, not an AVM", "the time-adjusted estimate is ~$525K, but it's an adjustment exercise — a local agent's comp run replaces it in an afternoon"],
       ["Confirm the sewer lateral & the right-of-way", "the street is sewered per two MLS records; call Simsbury WPCF (860-658-3258) and locate the deeded right-of-way on a survey before siting any addition"],
-      ["Price the heat-pump rebate before contracting", "EnergizeCT's top tier (up to $10K) historically targets oil/propane displacement — verify what a gas-heated home qualifies for"],
       ["Get 2–3 fixed-price bids for each phase", "not cost-plus — and carry 15–20% contingency on a 1965 house"],
       ["Watch 5 Lawton Drive-class listings", "if a true in-zone 3,000 sq ft home appears in budget while bids are out, re-run the calculator before committing"],
       ["Field-measure before design", "the floor plans here fit the assessor envelope exactly, but no interior dimensions were ever published"],
@@ -617,8 +615,16 @@
   document.addEventListener("DOMContentLoaded", () => {
     renderProperty(); renderSchools(); renderOptions(); renderAddition(); renderFloorplans(); renderFinancialModels(); renderStress(); renderExperts();
     renderListings(); renderForecast(); renderLife(); renderVerdictExtras(); renderMethodology();
-    buildControls(); recompute();
-    buildRateChart(); buildScatter(); buildAdditionChart(); buildMap();
+    buildControls();
+    let chartsBuilt = false;
+    const buildCharts = () => { if (chartsBuilt) return; chartsBuilt = true; recompute(); buildRateChart(); buildScatter(); buildAdditionChart(); };
+    // build charts only after webfonts load — otherwise Chart.js sizes the
+    // category axis with fallback-font metrics and clips the labels
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(buildCharts);
+      setTimeout(buildCharts, 2500); // fallback if fonts.ready never resolves
+    } else { buildCharts(); }
+    buildMap();
     motion();
   });
 })();
