@@ -164,7 +164,7 @@
   function buildAdditionChart() {
     if (!window.Chart) return;
     const items = DATA.addition.scenarios.slice().sort((a, b) => a.lo - b.lo);
-    const labels = items.map(s => (s.rec ? "★ " : "") + s.name.replace(/\s*\(.*\)$/, ""));
+    const labels = items.map(s => (s.rec ? "★ " : "") + (s.short || s.name));
     const data = items.map(s => [s.lo, s.hi]);
     const colors = items.map(s => s.hi <= 150000 ? "#2E8B6A" : (s.lo >= 150000 ? "#D2622A" : "#B98A2E"));
     const ceiling = {
@@ -309,7 +309,8 @@
     const checklist = [
       ["Pull the mortgage statement", "rate, balance, term — the entire ranking rests on the inferred ~2.9%. One phone call settles it"],
       ["Name the real pain: comfort or scale?", "no AC and a dated corner → Phase 1 fixes it for ~$25–50K; wanting 2,800+ sq ft → that's a move, not a project"],
-      ["Get a real CMA, not an AVM", "Redfin says $553K, the street's last sale was $452.5K — a local agent's comp run resolves the $100K spread"],
+      ["Inspect the ducts before pricing the AC", "the 2020 MLS said baseboard heat; the 2026 assessor card says forced air — if AC-sized ducts exist, cooling is $6–15K; if not, $15–30K"],
+      ["Get a real CMA, not an AVM", "the time-adjusted estimate is ~$525K, but it's an adjustment exercise — a local agent's comp run replaces it in an afternoon"],
       ["Confirm the sewer lateral & the right-of-way", "the street is sewered per two MLS records; call Simsbury WPCF (860-658-3258) and locate the deeded right-of-way on a survey before siting any addition"],
       ["Price the heat-pump rebate before contracting", "EnergizeCT's top tier (up to $10K) historically targets oil/propane displacement — verify what a gas-heated home qualifies for"],
       ["Get 2–3 fixed-price bids for each phase", "not cost-plus — and carry 15–20% contingency on a 1965 house"],
@@ -320,7 +321,7 @@
     checklist.forEach(([t, d]) => cl.appendChild(el("li", null, `<span class="box">✓</span><span class="tx"><b>${t}</b> — ${d}</span>`)));
 
     const flips = [
-      "The statement shows the mortgage is <b>not</b> sub-4.5% (refi, cash-out, ARM) — the lock-in premium vanishes and moving wins for a space-hungry family.",
+      "The statement shows an effective rate ≥ ~4.5% — refi, cash-out, ARM, or the FHA branch (3.5% down + life-of-loan MIP ≈ 3.9% effective, already close) — and the lock-in premium mostly vanishes.",
       "The family's honest answer is “we want 2,800+ square feet” — no sensible project gets a 54×26 raised ranch there; buy the space once.",
       "A CMA lands near $450K — freed equity shrinks ~$50K and Option B's math tightens; near $575K — the improvement ceiling rises and the Combo scope becomes defensible.",
       "Bids for the rear addition come back over ~$180K while a 5 Lawton-class in-zone listing sits on the market.",
@@ -358,16 +359,17 @@
   const CONTROLS = [
     { key: "currentRate", label: "Their current mortgage rate", sub: "★ the swing variable", min: 2.5, max: 7.5, step: 0.05, fmt: "pct" },
     { key: "currentBalance", label: "Mortgage balance remaining", min: 100000, max: 400000, step: 5000, fmt: "money" },
-    { key: "currentValue", label: "Current home value", sub: "AVM $553K vs street comp $452K", min: 425000, max: 600000, step: 5000, fmt: "money" },
+    { key: "currentValue", label: "Current home value", sub: "time-adjusted as-is ~$525K", min: 425000, max: 600000, step: 5000, fmt: "money" },
     { key: "additionCost", label: "Improvement budget — Option A", min: 25000, max: 300000, step: 5000, fmt: "money" },
     { key: "additionRecoup", label: "Improvement resale recoup", sub: "% of spend added to value", min: 20, max: 80, step: 5, fmt: "pctRaw" },
     { key: "newHomePrice", label: "New home price — Option B", min: 450000, max: 900000, step: 10000, fmt: "money" },
+    { key: "spaceValue", label: "What the extra space is worth", sub: "$/mo credited to B & C — the honest input", min: 0, max: 1500, step: 50, fmt: "permo" },
     { key: "todayRate", label: "Today's 30-yr mortgage rate", min: 5, max: 8, step: 0.05, fmt: "pct" },
     { key: "heRate", label: "Home-equity loan rate", min: 6, max: 10, step: 0.05, fmt: "pct" },
     { key: "appreciation", label: "Home appreciation / yr", min: 0, max: 8, step: 0.5, fmt: "pct" },
     { key: "investReturn", label: "Investment return / yr", sub: "opportunity cost of cash flow", min: 3, max: 10, step: 0.5, fmt: "pct" },
   ];
-  const fmtVal = (v, f) => f === "money" ? moneyK(v) : f === "pctRaw" ? Math.round(v) + "%" : pct(v);
+  const fmtVal = (v, f) => f === "money" ? moneyK(v) : f === "pctRaw" ? Math.round(v) + "%" : f === "permo" ? "$" + Math.round(v) + "/mo" : pct(v);
   const state = Object.assign({}, DATA.model);
 
   function buildControls() {
@@ -423,23 +425,29 @@
     // context, never the verdict.
     const bar = $("#verdictBar");
     const lockedIn = state.currentRate < 4.5;
+    const aLeads = r.leader === "a";
     const close = r.spreadPct < 10;
     const penaltyPerYr = Math.max(0, (state.todayRate - state.currentRate) / 100 * state.currentBalance);
-    if (lockedIn) {
+    if (lockedIn && (aLeads || close)) {
       bar.style.background = "#1F5744";
       $("#verdictText").textContent = "Stay & Improve";
-      $("#verdictNote").innerHTML = close
-        ? `The 10-year dollars are about even (within <b>${r.spreadPct.toFixed(1)}%</b>) — so the tiebreakers decide, and at ${pct(state.currentRate)} they favor staying: the family keeps the Latimer zone, the walkable school, and a mortgage worth ~<b>${moneyFull(penaltyPerYr)}/yr</b> vs today's ${pct(state.todayRate)}.`
-        : `Staying leads by <b>${moneyK(r.max - r.min)}</b> over 10 years <i>and</i> keeps the zone and the low ${pct(state.currentRate)} rate.`;
+      $("#verdictNote").innerHTML = aLeads
+        ? (close
+          ? `The 10-year dollars are about even (within <b>${r.spreadPct.toFixed(1)}%</b>) — so the tiebreakers decide, and at ${pct(state.currentRate)} they favor staying: the family keeps the Latimer zone, the walkable school, and a mortgage worth ~<b>${moneyFull(penaltyPerYr)}/yr</b> vs today's ${pct(state.todayRate)}.`
+          : `Staying leads by <b>${moneyK(r.max - r.min)}</b> over 10 years <i>and</i> keeps the zone and the low ${pct(state.currentRate)} rate.`)
+        : `At a space value of <b>$${Math.round(state.spaceValue)}/mo</b> the dollars tip slightly toward moving — but within <b>${r.spreadPct.toFixed(1)}%</b>, inside this model's noise. At ${pct(state.currentRate)} the tiebreakers still favor staying; if that space number is real and durable, treat this as a genuine coin-flip and tour the next Lawton-class listing.`;
     } else {
       bar.style.background = "#A84A1F";
       $("#verdictText").textContent = "Move Now";
-      $("#verdictNote").innerHTML = `At ${pct(state.currentRate)} there's no cheap mortgage left to protect — the main reason to stay is gone, so buying the larger <i>in-zone</i> home is the better call. ${close ? `The 10-year dollars stay close (within ${r.spreadPct.toFixed(1)}%), so it comes down to turnkey space vs. a build.` : `It also leads by <b>${moneyK(r.max - r.min)}</b> on the numbers.`}`;
+      $("#verdictNote").innerHTML = lockedIn
+        ? `Even with the low ${pct(state.currentRate)} rate, at these settings the bigger house wins by <b>${moneyK(r.max - r.min)}</b> — the space value you've set outweighs the golden handcuffs. That is the honest trade.`
+        : `At ${pct(state.currentRate)} there's no cheap mortgage left to protect — the main reason to stay is gone, so buying the larger <i>in-zone</i> home is the better call. ${close ? `The 10-year dollars stay close (within ${r.spreadPct.toFixed(1)}%), so it comes down to turnkey space vs. a build.` : `The numbers agree: the leader wins by <b>${moneyK(r.max - r.min)}</b>.`}`;
     }
     renderCalcCards(r);
     $("#assumeNote").innerHTML = state.currentRate < 4.5
       ? `<b>Lock-in active:</b> at ${pct(state.currentRate)}, keeping the first mortgage (Option A) is worth roughly <b>${moneyFull((state.todayRate - state.currentRate) / 100 * state.currentBalance)}/yr</b> vs re-borrowing at today's ${pct(state.todayRate)}. That's the engine behind staying — and it's inferred from the Aug-2020 closing date, not verified. Pull the statement.`
       : `<b>No lock-in benefit:</b> at ${pct(state.currentRate)} the current rate isn't low, so staying loses its financial engine — moving (B) becomes the space-per-dollar play. This is exactly why verifying the real rate is step #1.`;
+    $("#assumeNote").innerHTML += ` <b>Space value:</b> B and C are credited $${Math.round(state.spaceValue)}/mo for the bigger house's extra space (A gets a quarter-credit when its budget includes the rear addition) — the input the CFP reviewer proved was missing. Side-pot returns are pre-tax and assume full savings discipline.`;
     updateNetChart(r);
   }
 
@@ -447,10 +455,12 @@
     const labels = ["Stay & Improve", "Move Now", "Wait"];
     const equity = [r.A.equity, r.B.equity, r.C.equity];
     const side = [r.A.side, r.B.side, r.C.side];
+    const space = [r.A.space, r.B.space, r.C.space];
     if (!window.Chart) return;
     if (netChart) {
       netChart.data.datasets[0].data = equity;
       netChart.data.datasets[1].data = side;
+      netChart.data.datasets[2].data = space;
       netChart.update();
       return;
     }
@@ -461,6 +471,7 @@
         datasets: [
           { label: "Home equity", data: equity, backgroundColor: [OPT_COLOR.a, OPT_COLOR.b, OPT_COLOR.c], borderRadius: 6, stack: "s" },
           { label: "Invested cash-flow difference", data: side, backgroundColor: [OPT_LIGHT.a, OPT_LIGHT.b, OPT_LIGHT.c], borderRadius: 6, stack: "s" },
+          { label: "Space-utility credit", data: space, backgroundColor: ["#DCEDE4", "#F6DFCC", "#DDE5F4"], borderRadius: 6, stack: "s" },
         ],
       },
       options: chartOpts({ stacked: true, money: true }),
@@ -524,8 +535,8 @@
       data: { datasets: [
         { label: "In Latimer zone", data: pts(true), backgroundColor: "#2E8B6A", pointRadius: 7, pointHoverRadius: 9 },
         { label: "Other Simsbury zone", data: pts(false), backgroundColor: "#5C6B71", pointRadius: 7, pointHoverRadius: 9 },
-        { label: "10 Bob White Way (today)", data: [{ x: 1505, y: 500000, addr: "10 Bob White Way · 1,505 sf above grade" }], backgroundColor: "#B98A2E", pointStyle: "rectRot", pointRadius: 11, pointHoverRadius: 13 },
-        { label: "After Phase 1 + 2 (~$120K)", data: [{ x: 1855, y: 566000, addr: "10 Bob White Way + rear addition" }], backgroundColor: "#B98A2E", pointStyle: "star", pointRadius: 12, pointHoverRadius: 14 },
+        { label: "10 Bob White Way (today)", data: [{ x: 1505, y: 525000, addr: "10 Bob White Way · 1,505 sf above grade" }], backgroundColor: "#B98A2E", pointStyle: "rectRot", pointRadius: 11, pointHoverRadius: 13 },
+        { label: "After Phase 1 + 2 (~$150K)", data: [{ x: 1855, y: 585000, addr: "10 Bob White Way + rear addition" }], backgroundColor: "#B98A2E", pointStyle: "star", pointRadius: 12, pointHoverRadius: 14 },
       ] },
       options: Object.assign(chartOpts(), {
         plugins: {
