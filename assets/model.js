@@ -10,6 +10,15 @@
        market value (~1.6% — Simsbury assessments date to the 2022 reval), not
        70% × mills (2.4%), which overstated the move penalty in the old model.
        Only the ADDITION's added value is taxed at 70% × mills (CGS 12-53a/62a).
+     • Post-expert-review fixes (loan officer + CFP): insurance scales with home
+       value across options; the invested side pot runs on FULL carry (P&I +
+       tax + insurance + maintenance), not carry-ex-maintenance; selling costs
+       default to ~6.5% (commission + CT conveyance — previously double-booked);
+       and a `spaceValue` input prices the utility of the bigger house's extra
+       square footage for B/C — the input the CFP reviewer proved was missing.
+       Known simplifications (disclosed): taxes/insurance held nominal, side pot
+       assumes full savings discipline at a pre-tax return, fvMonthly treats the
+       carry difference as level across the horizon.
    ========================================================================= */
 
 function monthlyPayment(P, ratePct, years) {
@@ -60,7 +69,7 @@ function computeOptions(m) {
   const cashA = first.interest + he.interest + taxA * H + m.insurance * H + maintA;
   const equityA = endA - first.end - he.end;
   const piA = first.interest + first.principal + he.interest + he.principal;
-  const avgMonthlyA = (piA + taxA * H + m.insurance * H) / months;
+  const avgMonthlyA = (piA + taxA * H + m.insurance * H + maintA) / months;
 
   // ---------------- OPTION B — move now ----------------
   const freed = m.currentValue * (1 - m.sellCostPct) - m.currentBalance;
@@ -71,10 +80,11 @@ function computeOptions(m) {
   const taxB = m.newHomePrice * m.effTaxRate; // effective rate on market value (2022-reval basis)
   const endB = grow(m.newHomePrice, m.appreciation, H);
   const maintB = m.maintRate * ((m.newHomePrice + endB) / 2) * H;
-  const monthlyB = nb.payment + taxB / 12 + m.insurance / 12;
-  const cashB = nb.interest + taxB * H + m.insurance * H + maintB;
+  const insB = m.insurance * (m.newHomePrice / m.currentValue); // premium scales with dwelling value
+  const monthlyB = nb.payment + taxB / 12 + insB / 12;
+  const cashB = nb.interest + taxB * H + insB * H + maintB;
   const equityB = endB - nb.end;
-  const avgMonthlyB = (nb.interest + nb.principal + taxB * H + m.insurance * H) / months;
+  const avgMonthlyB = (nb.interest + nb.principal + taxB * H + insB * H + maintB) / months;
 
   // ---------------- OPTION C — wait W yrs, then move ----------------
   const W = m.waitYears, postM = (H - W) * 12;
@@ -88,15 +98,16 @@ function computeOptions(m) {
   const nc = amortize(loanC, m.waitRate, 30, postM);
   const taxC = newAtMove * m.effTaxRate;
   const endC = grow(newAtMove, m.appreciation, H - W);
-  const maintCarry = m.maintRate * m.currentValue * W;
-  const maintC = m.maintRate * ((newAtMove + endC) / 2) * (H - W) + maintCarry;
-  const monthlyC = nc.payment + taxC / 12 + m.insurance / 12; // stabilized post-move
+  const maintCarry = m.maintRate * ((m.currentValue + curAtMove) / 2) * W;
+  const maintPost = m.maintRate * ((newAtMove + endC) / 2) * (H - W);
+  const maintC = maintPost + maintCarry;
+  const insC = m.insurance * (newAtMove / m.currentValue); // post-move premium scales with value
+  const monthlyC = nc.payment + taxC / 12 + insC / 12; // stabilized post-move
   const cashC = carry.interest + m.currentTax * W + m.insurance * W + maintCarry
-              + nc.interest + taxC * (H - W) + m.insurance * (H - W)
-              + m.maintRate * ((newAtMove + endC) / 2) * (H - W);
+              + nc.interest + taxC * (H - W) + insC * (H - W) + maintPost;
   const equityC = endC - nc.end;
   const piC = carry.interest + carry.principal + nc.interest + nc.principal;
-  const avgMonthlyC = (piC + m.currentTax * W + taxC * (H - W) + m.insurance * H) / months;
+  const avgMonthlyC = (piC + m.currentTax * W + taxC * (H - W) + m.insurance * W + insC * (H - W) + maintC) / months;
 
   // ---------------- opportunity cost (side pot) ----------------
   // the option with the highest avg monthly outlay is the baseline; cheaper
@@ -106,9 +117,18 @@ function computeOptions(m) {
   const sideB = fvMonthly(base - avgMonthlyB, m.investReturn, H);
   const sideC = fvMonthly(base - avgMonthlyC, m.investReturn, H);
 
-  const A = { id: "a", monthly: monthlyA, cash: cashA, equity: equityA, side: sideA, net: equityA + sideA, endValue: endA };
-  const B = { id: "b", monthly: monthlyB, cash: cashB, equity: equityB, side: sideB, net: equityB + sideB, endValue: endB };
-  const C = { id: "c", monthly: monthlyC, cash: cashC, equity: equityC, side: sideC, net: equityC + sideC, endValue: endC };
+  // ---------------- space utility (the CFP's missing input) ----------------
+  // what the bigger house's extra living space is WORTH to the family, $/mo,
+  // accrued like the side pot so the credit is symmetric with invested cash.
+  const sv = m.spaceValue || 0;
+  const spaceB = fvMonthly(sv, m.investReturn, H);
+  const spaceC = fvMonthly(sv, m.investReturn, H - W); // space only arrives after the move
+  // Option A's Phase-2 addition buys ~1/4 of the move's extra space once built
+  const spaceA = m.additionCost >= 100000 ? fvMonthly(sv * 0.25, m.investReturn, H) : 0;
+
+  const A = { id: "a", monthly: monthlyA, cash: cashA, equity: equityA, side: sideA, space: spaceA, net: equityA + sideA + spaceA, endValue: endA };
+  const B = { id: "b", monthly: monthlyB, cash: cashB, equity: equityB, side: sideB, space: spaceB, net: equityB + sideB + spaceB, endValue: endB };
+  const C = { id: "c", monthly: monthlyC, cash: cashC, equity: equityC, side: sideC, space: spaceC, net: equityC + sideC + spaceC, endValue: endC };
 
   const nets = [A, B, C].map(o => o.net);
   const max = Math.max(...nets), min = Math.min(...nets);
